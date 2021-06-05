@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
+import {useDispatch, useSelector} from "react-redux"
+
+import {finishGame} from "../actions"
+
 import Blocks from "./Blocks";
 
 function Info() {
   let timer = null;
   const [timeLeft, setTimeLeft] = useState(10);
   const [timeElapsed, setTimeElapsed] = useState(0);
+  const gameState = useSelector(state => state.gameState)
+
+  const dispatch = useDispatch()
 
   const countDown = () => {
     if (timeLeft > 0) {
@@ -13,12 +20,13 @@ function Info() {
       console.log("timeLeft: ", timeLeft, "timeElapsed: ", timeElapsed);
     } else {
       clearInterval(timer);
+      dispatch(finishGame())
       console.log("finish");
     }
   };
 
   useEffect(() => {
-    if (timeLeft > 0) {
+    if (gameState) {
       let timer = setInterval(() => {
         countDown();
       }, 1000);

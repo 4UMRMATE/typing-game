@@ -1,7 +1,12 @@
+import {useDispatch, useSelector} from "react-redux"
+import {startGame} from "../actions"
+
 function TextInput() {
+  const dispatch = useDispatch()
+
   return (
     <div className="TextInput">
-      <h1>TextInput</h1>
+      <input type="text" onChange={() => dispatch(startGame())} />
     </div>
   );
 }
